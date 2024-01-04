@@ -19,7 +19,7 @@ function ShowStudent() {
   }, []);
 
   return (
-    <Card class="" style={{ width: "18rem",textAlign:"center",backgroundColor:"lightpink" }}>
+    <Card style={{ width: "18rem",textAlign:"center",backgroundColor:"lightpink" }}>
       <Card.Body>
         {students.map((student) => (
           <div key={student.id}>
