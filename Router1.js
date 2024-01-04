@@ -10,7 +10,7 @@ export default function Router1() {
      <BrowserRouter>
      <Head/>
         <Routes>
-            <Route index element={<h2 class="text-center bg-success"> Home Page</h2> } />
+            <Route index element={<h2 className="text-center bg-success"> Home Page</h2> } />
             <Route path="/addstudent" element={<AddStudent/>} />
             <Route path="/showstudent" element={<ShowStudent/>} />
           
