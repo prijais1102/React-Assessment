@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 
 export default function Head() {
   return (
-    <div class="text-center bg-primary" >
+    <div className="text-center bg-primary" >
       <h1>Student Management</h1>
       <nav>
         <Link style={{textDecoration:'none',color:'black'}} to="/">Home|</Link>
