@@ -1,25 +1,43 @@
-import axios from 'axios';
-import React, { useState } from 'react';
- 
- 
+import axios from "axios";
+import React, { useState } from "react";
+import ShowStudent from "./ShowStudent";
+
+const validMessageMobile = [];
+const validMessageName = [];
 function AddStudent() {
   const [formData, setFormData] = useState({
-    name: '',
-    dob: '',
-    gender: '',
-    address: '',
-    mobileNumber: '',
+    name: "",
+    dob: "",
+    gender: "",
+    address: "",
+    mobileNumber: "",
   });
- 
+
   const [formErrors, setFormErrors] = useState({
-    name: '',
-    dob: '',
-    gender: '',
-    address: '',
-    mobileNumber: '',
+    name: "",
+    dob: "",
+    gender: "",
+    address: "",
+    mobileNumber: "",
   });
- 
+  const validMobile = () => {
+    if (formData.mobileNumber.length != 10) {
+      validMessageMobile.push("Enter 10-digit mobile number");
+    }
+  };
+  const validName = () => {
+    for(let i=0;i<formData.name.length;i++)
+    {
+    if(!isNaN(formData.name[i]))
+    {
+      validMessageName.push("Enter valid name");
+      break; 
+    }
+    }
+  }
+
   const handleInputChange = (e) => {
+
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -27,14 +45,13 @@ function AddStudent() {
     });
     setFormErrors({
       ...formErrors,
-      [name]: value ? '' : `Please enter ${name}.`,
+      [name]: value ? "" : `Please enter ${name}.`,
     });
   };
- 
+
   const submitHandler = (e) => {
     e.preventDefault();
- 
-   
+
     const errors = {};
     for (const key in formData) {
       if (!formData[key]) {
@@ -42,39 +59,32 @@ function AddStudent() {
       }
     }
     setFormErrors(errors);
-    
-    // validateName(formData.name)
-    // {
-    //     // if(formData.name)
-
-    // }
-    
- 
-   
     if (Object.keys(errors).length === 0) {
-       axios.post('http://localhost:8000/student', formData); 
+      axios.post("http://localhost:8000/student", formData);
     }
   };
- 
- 
- 
+
   return (
-    <div class="container d-center" >
-      <h2>Add Student</h2>
+    <div className="container d-center">
+      <h2 className="text-center">Add Student</h2>
       <form onSubmit={submitHandler}>
-        <div>
-          <label>Student Name:</label>
+        <div  className=" justify-content-center d-flex" >
+          <label className="text-align-left">Name: </label>
           <input
+            className="form-control w-25"
             type="text"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
+            onBlur={validName}
           />
           <span>{formErrors.name}</span>
+          <span>{validMessageName}</span>
         </div>
-        <div>
-          <label>Student DOB:</label>
+        <div className=" justify-content-center d-flex">
+          <label>DOB: </label>
           <input
+            className="form-control w-25"
             type="date"
             name="dob"
             value={formData.dob}
@@ -82,14 +92,14 @@ function AddStudent() {
           />
           <span>{formErrors.dob}</span>
         </div>
-        <div>
-          <label>Student Gender:</label>
+        <div className=" justify-content-center d-flex">
+          <label>Gender: </label>
           <label>
             <input
               type="radio"
               name="gender"
               value="Male"
-              checked={formData.gender === 'Male'}
+              checked={formData.gender === "Male"}
               onChange={handleInputChange}
             />
             Male
@@ -99,16 +109,17 @@ function AddStudent() {
               type="radio"
               name="gender"
               value="Female"
-              checked={formData.gender === 'Female'}
               onChange={handleInputChange}
             />
             Female
           </label>
           <span>{formErrors.gender}</span>
         </div>
-        <div>
-          <label>Student Address:</label>
+        <br></br>
+        <div className=" justify-content-center d-flex">
+          <label>Address: </label>
           <input
+            className="form-control w-25"
             type="text"
             name="address"
             value={formData.address}
@@ -116,20 +127,27 @@ function AddStudent() {
           />
           <span>{formErrors.address}</span>
         </div>
-        <div>
-          <label>Mobile Number:</label>
+        <div className=" justify-content-center d-flex" >
+          <label>Mobile Number: </label>
           <input
-            type="number"
+            className="form-control w-25"
+            type="text"
             name="mobileNumber"
             value={formData.mobileNumber}
             onChange={handleInputChange}
+            onBlur={validMobile}
           />
           <span>{formErrors.mobileNumber}</span>
+          <span>{validMessageMobile}</span>
         </div>
+        <br>
+        </br>
+        <div className="justify-content-center d-flex">
         <button type="submit">Submit</button>
+        </div>
       </form>
     </div>
   );
 }
- 
+
 export default AddStudent;
